@@ -227,16 +227,16 @@
 
         <header>
             <h1>OnlyGamesUI TODO List</h1>
-            <p class="subtitle">Created By Devs, For Devs</p> 
+            <p class="subtitle">Created By JFresh</p> 
         </header>
 
         <section class="add-task-section">
             <div class="form-grid">
 
                 <select id="column-select">
-                    <option value="todo">To Do</option>
-                    <option value="tofix">To Fix</option>
-                    <option value="testing">Testing</option>
+                    <option value="todo">ToDo/Add</option>
+                    <option value="tofix">To Fix/Bugs</option>
+                    <option value="testing">Alpha Testing</option>
                     <option value="completed">Completed</option>
                 </select>
 
@@ -263,7 +263,7 @@
         <div class="board">
 
             <div class="column">
-                <h2 class="column-title">To Do</h2>
+                <h2 class="column-title">ToDo/Add</h2>
                 <div
                     class="tasks-container"
                     id="todo-list"
@@ -271,7 +271,7 @@
             </div>
 
             <div class="column">
-                <h2 class="column-title">To Fix</h2>
+                <h2 class="column-title">To Fix/Bugs</h2>
                 <div
                     class="tasks-container"
                     id="tofix-list"
@@ -279,7 +279,7 @@
             </div>
 
             <div class="column">
-                <h2 class="column-title">Testing</h2>
+                <h2 class="column-title">Alpha Testing</h2>
                 <div
                     class="tasks-container"
                     id="testing-list"
@@ -375,7 +375,7 @@
                         columnId !== "todo"
                             ? `<button class="move-btn btn-blue"
                                 onclick="moveTask('${columnId}','todo',${task.id})">
-                                To Do
+                                ToDo/Add
                                </button>`
                             : ""
                     }
@@ -384,7 +384,7 @@
                         columnId !== "tofix"
                             ? `<button class="move-btn btn-red"
                                 onclick="moveTask('${columnId}','tofix',${task.id})">
-                                To Fix
+                                To Fix/Bugs
                                </button>`
                             : ""
                     }
@@ -393,7 +393,7 @@
                         columnId !== "testing"
                             ? `<button class="move-btn btn-purple"
                                 onclick="moveTask('${columnId}','testing',${task.id})">
-                                Testing
+                                Alpha Testing
                                </button>`
                             : ""
                     }
