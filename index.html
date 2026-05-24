@@ -234,8 +234,8 @@
             <div class="form-grid">
 
                 <select id="column-select">
-                    <option value="todo">ToDo/Add</option>
-                    <option value="tofix">To Fix/Bugs</option>
+                    <option value="todo">ToDo - Add</option>
+                    <option value="tofix">To Fix - Bugs</option>
                     <option value="testing">Alpha Testing</option>
                     <option value="completed">Completed</option>
                 </select>
@@ -263,7 +263,7 @@
         <div class="board">
 
             <div class="column">
-                <h2 class="column-title">ToDo/Add</h2>
+                <h2 class="column-title">ToDo - Add</h2>
                 <div
                     class="tasks-container"
                     id="todo-list"
@@ -271,7 +271,7 @@
             </div>
 
             <div class="column">
-                <h2 class="column-title">To Fix/Bugs</h2>
+                <h2 class="column-title">To Fix - Bugs</h2>
                 <div
                     class="tasks-container"
                     id="tofix-list"
@@ -375,7 +375,7 @@
                         columnId !== "todo"
                             ? `<button class="move-btn btn-blue"
                                 onclick="moveTask('${columnId}','todo',${task.id})">
-                                ToDo/Add
+                                ToDo - Add
                                </button>`
                             : ""
                     }
@@ -384,7 +384,7 @@
                         columnId !== "tofix"
                             ? `<button class="move-btn btn-red"
                                 onclick="moveTask('${columnId}','tofix',${task.id})">
-                                To Fix/Bugs
+                                To Fix - Bugs
                                </button>`
                             : ""
                     }
