@@ -300,9 +300,43 @@
     <script>
         const STORAGE_KEY = "freshlabs_tasks";
 
-        let tasks = JSON.parse(
+        let savedTasks = JSON.parse(
             localStorage.getItem(STORAGE_KEY)
-        ) || [];
+        );
+
+        let tasks = [];
+
+        if (savedTasks) {
+
+            if (Array.isArray(savedTasks)) {
+
+                tasks = savedTasks;
+
+            } else {
+
+                ["todo", "tofix", "testing", "completed"].forEach(column => {
+
+                    if (Array.isArray(savedTasks[column])) {
+
+                        savedTasks[column].forEach(task => {
+
+                            tasks.push({
+                                id: task.id || Date.now(),
+                                text: task.text || "",
+                                priority: task.priority || "green",
+                                column: column,
+                                timestamp: task.timestamp || ""
+                            });
+
+                        });
+
+                    }
+
+                });
+
+            }
+
+        }
 
         function saveTasks() {
             localStorage.setItem(
