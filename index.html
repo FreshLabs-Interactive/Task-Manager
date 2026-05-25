@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>FreshLabs Interactive - Task Manager</title>
+    <title>OnlyGamesUI TODO List</title>
 
     <style>
         * {
@@ -29,24 +29,25 @@
         }
 
         header {
-            background: #0b1eb0; 
-            border-radius: 10px;
-            padding: 25px;
+            background: #0b1eb0;
+            border-radius: 12px;
+            padding: 30px;
             text-align: center;
             margin-bottom: 25px;
         }
 
         h1 {
             font-size: 2.5rem;
+            margin-bottom: 8px;
         }
 
         .subtitle {
-            opacity: 0.85;
+            opacity: 0.8;
         }
 
         .add-task-section {
             background: #1f2937;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 25px;
         }
@@ -61,7 +62,7 @@
         select,
         button {
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             border: none;
             font-size: 1rem;
         }
@@ -77,11 +78,11 @@
             color: white;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.2s ease;
+            transition: 0.2s ease;
         }
 
         button:hover {
-            background: #b91c1c;
+            background: #1536ff;
         }
 
         .board {
@@ -93,16 +94,16 @@
         .column {
             background: #1f2937;
             border-left: 4px solid #0b1eb0;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 15px;
             min-height: 500px;
         }
 
         .column-title {
             text-align: center;
-            margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .tasks-container {
@@ -113,9 +114,9 @@
 
         .task {
             background: #111827;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.08);
         }
 
         .task-header {
@@ -137,40 +138,42 @@
             border-radius: 50%;
         }
 
-        .priority-green {
-            background: #22c55e;
-        }
-
-        .priority-yellow {
-            background: #eab308;
+        .priority-red {
+            background: #ef4444;
         }
 
         .priority-orange {
             background: #f97316;
         }
 
-        .priority-red {
-            background: #ef4444;
+        .priority-yellow {
+            background: #eab308;
+        }
+
+        .priority-green {
+            background: #22c55e;
         }
 
         .task-time {
             font-size: 0.8rem;
-            opacity: 0.7;
+            opacity: 0.6;
             margin: 10px 0;
         }
 
         .task-delete {
             background: transparent;
-            color: #ef4444;
             border: none;
+            color: #ef4444;
             cursor: pointer;
             font-size: 1rem;
+            padding: 0;
         }
 
         .move-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
+            margin-top: 12px;
         }
 
         .move-btn {
@@ -185,7 +188,7 @@
         }
 
         .btn-red {
-            background: #0b1eb0;
+            background: #dc2626;
         }
 
         .btn-purple {
@@ -198,14 +201,14 @@
 
         .empty-column {
             text-align: center;
-            opacity: 0.6;
+            opacity: 0.5;
             margin-top: 20px;
         }
 
         footer {
             margin-top: 30px;
             text-align: center;
-            opacity: 0.7;
+            opacity: 0.6;
         }
 
         @media (max-width: 1200px) {
@@ -223,20 +226,22 @@
 </head>
 
 <body>
+
     <div class="container">
 
         <header>
             <h1>OnlyGamesUI TODO List</h1>
-            <p class="subtitle">Created By JFresh</p> 
+            <p class="subtitle">Created By JFresh</p>
         </header>
 
         <section class="add-task-section">
+
             <div class="form-grid">
 
                 <select id="column-select">
                     <option value="todo">ToDo - Add</option>
-                    <option value="tofix">To Fix - Bugs</option>
-                    <option value="testing">Alpha Testing</option>
+                    <option value="tofix">Fixes - Bugs</option>
+                    <option value="testing">Testing</option>
                     <option value="completed">Completed</option>
                 </select>
 
@@ -247,10 +252,10 @@
                 >
 
                 <select id="priority-select">
-                    <option value="green">No Priority</option>
-                    <option value="yellow">Low Priority</option>
-                    <option value="orange">Medium Priority</option>
                     <option value="red">High Priority</option>
+                    <option value="orange">Medium Priority</option>
+                    <option value="yellow">Low Priority</option>
+                    <option value="green">No Priority</option>
                 </select>
 
                 <button id="add-task-btn">
@@ -258,40 +263,29 @@
                 </button>
 
             </div>
+
         </section>
 
         <div class="board">
 
             <div class="column">
                 <h2 class="column-title">ToDo - Add</h2>
-                <div
-                    class="tasks-container"
-                    id="todo-list"
-                ></div>
+                <div class="tasks-container" id="todo-list"></div>
             </div>
 
             <div class="column">
-                <h2 class="column-title">To Fix - Bugs</h2>
-                <div
-                    class="tasks-container"
-                    id="tofix-list"
-                ></div>
+                <h2 class="column-title">Fixes - Bugs</h2>
+                <div class="tasks-container" id="tofix-list"></div>
             </div>
 
             <div class="column">
-                <h2 class="column-title">Alpha Testing</h2>
-                <div
-                    class="tasks-container"
-                    id="testing-list"
-                ></div>
+                <h2 class="column-title">Testing</h2>
+                <div class="tasks-container" id="testing-list"></div>
             </div>
 
             <div class="column">
                 <h2 class="column-title">Completed</h2>
-                <div
-                    class="tasks-container"
-                    id="completed-list"
-                ></div>
+                <div class="tasks-container" id="completed-list"></div>
             </div>
 
         </div>
@@ -333,81 +327,6 @@
             }
         }
 
-        function renderTask(task, columnId) {
-            const div = document.createElement("div");
-
-            div.className = "task";
-
-            div.innerHTML = `
-                <div class="task-header">
-                    <div class="priority-indicator">
-                        <div class="priority-dot priority-${task.priority}"></div>
-
-                        <span>
-                            ${getPriorityText(task.priority)}
-                        </span>
-                    </div>
-
-                    <button
-                        class="task-delete"
-                        onclick="deleteTask('${columnId}', ${task.id})"
-                    >
-                        ✕
-                    </button>
-                </div>
-
-                <div>
-                    ${escapeHtml(task.text)}
-                </div>
-
-                <div class="task-time">
-                    ${task.timestamp}
-                </div>
-
-                <div class="move-buttons">
-
-                    ${
-                        columnId !== "todo"
-                            ? `<button class="move-btn btn-blue"
-                                onclick="moveTask('${columnId}','todo',${task.id})">
-                                ToDo - Add
-                               </button>`
-                            : ""
-                    }
-
-                    ${
-                        columnId !== "tofix"
-                            ? `<button class="move-btn btn-red"
-                                onclick="moveTask('${columnId}','tofix',${task.id})">
-                                To Fix - Bugs
-                               </button>`
-                            : ""
-                    }
-
-                    ${
-                        columnId !== "testing"
-                            ? `<button class="move-btn btn-purple"
-                                onclick="moveTask('${columnId}','testing',${task.id})">
-                                Alpha Testing
-                               </button>`
-                            : ""
-                    }
-
-                    ${
-                        columnId !== "completed"
-                            ? `<button class="move-btn btn-green"
-                                onclick="moveTask('${columnId}','completed',${task.id})">
-                                Complete
-                               </button>`
-                            : ""
-                    }
-
-                </div>
-            `;
-
-            return div;
-        }
-
         function getPriorityValue(priority) {
             switch (priority) {
                 case "red":
@@ -424,7 +343,93 @@
             }
         }
 
+        function escapeHtml(text) {
+            const div = document.createElement("div");
+
+            div.textContent = text;
+
+            return div.innerHTML;
+        }
+
+        function renderTask(task) {
+            const div = document.createElement("div");
+
+            div.className = "task";
+
+            div.innerHTML = `
+                <div class="task-header">
+
+                    <div class="priority-indicator">
+                        <div class="priority-dot priority-${task.priority}"></div>
+
+                        <span>
+                            ${getPriorityText(task.priority)}
+                        </span>
+                    </div>
+
+                    <button
+                        class="task-delete"
+                        onclick="deleteTask(${task.id})"
+                    >
+                        ✕
+                    </button>
+
+                </div>
+
+                <div>
+                    ${escapeHtml(task.text)}
+                </div>
+
+                <div class="task-time">
+                    ${task.timestamp}
+                </div>
+
+                <div class="move-buttons">
+
+                    ${
+                        task.column !== "todo"
+                            ? `<button class="move-btn btn-blue"
+                                onclick="moveTask(${task.id}, 'todo')">
+                                ToDo
+                               </button>`
+                            : ""
+                    }
+
+                    ${
+                        task.column !== "tofix"
+                            ? `<button class="move-btn btn-red"
+                                onclick="moveTask(${task.id}, 'tofix')">
+                                Fix
+                               </button>`
+                            : ""
+                    }
+
+                    ${
+                        task.column !== "testing"
+                            ? `<button class="move-btn btn-purple"
+                                onclick="moveTask(${task.id}, 'testing')">
+                                Testing
+                               </button>`
+                            : ""
+                    }
+
+                    ${
+                        task.column !== "completed"
+                            ? `<button class="move-btn btn-green"
+                                onclick="moveTask(${task.id}, 'completed')">
+                                Complete
+                               </button>`
+                            : ""
+                    }
+
+                </div>
+            `;
+
+            return div;
+        }
+
         function renderBoard() {
+
             const columns = {
                 todo: document.getElementById("todo-list"),
                 tofix: document.getElementById("tofix-list"),
@@ -436,15 +441,6 @@
                 column.innerHTML = "";
             });
 
-            if (tasks.length === 0) {
-                Object.values(columns).forEach(column => {
-                    column.innerHTML =
-                        '<div class="empty-column">No tasks</div>';
-                });
-
-                return;
-            }
-
             const sortedTasks = [...tasks].sort((a, b) => {
                 return (
                     getPriorityValue(b.priority) -
@@ -452,14 +448,31 @@
                 );
             });
 
-            sortedTasks.forEach(task => {
-                columns[task.column].appendChild(
-                    renderTask(task, task.column)
-                );
+            Object.keys(columns).forEach(columnName => {
+
+                const filteredTasks = sortedTasks.filter(task => {
+                    return task.column === columnName;
+                });
+
+                if (filteredTasks.length === 0) {
+                    columns[columnName].innerHTML =
+                        '<div class="empty-column">No tasks</div>';
+
+                    return;
+                }
+
+                filteredTasks.forEach(task => {
+                    columns[columnName].appendChild(
+                        renderTask(task)
+                    );
+                });
+
             });
+
         }
 
         function addTask() {
+
             const input =
                 document.getElementById("task-input");
 
@@ -489,34 +502,30 @@
             input.value = "";
         }
 
-        function deleteTask(columnId, taskId) {
-            tasks = tasks.filter(task => task.id !== taskId);
+        function deleteTask(taskId) {
+
+            tasks = tasks.filter(task => {
+                return task.id !== taskId;
+            });
 
             saveTasks();
             renderBoard();
         }
 
-        function moveTask(fromColumn, toColumn, taskId) {
-            const task = tasks.find(
-                task => task.id === taskId
-            );
-        
+        function moveTask(taskId, newColumn) {
+
+            const task = tasks.find(task => {
+                return task.id === taskId;
+            });
+
             if (!task) {
                 return;
             }
 
-            task.column = toColumn;
+            task.column = newColumn;
 
             saveTasks();
             renderBoard();
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement("div");
-
-            div.textContent = text;
-
-            return div.innerHTML;
         }
 
         document
@@ -526,12 +535,15 @@
         document
             .getElementById("task-input")
             .addEventListener("keydown", function (e) {
+
                 if (e.key === "Enter") {
                     addTask();
                 }
+
             });
 
         renderBoard();
     </script>
+
 </body>
 </html>
