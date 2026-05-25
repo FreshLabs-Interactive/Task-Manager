@@ -308,12 +308,7 @@
 
         let tasks = JSON.parse(
             localStorage.getItem(STORAGE_KEY)
-        ) || {
-            todo: [],
-            tofix: [],
-            testing: [],
-            completed: []
-        };
+        ) || [];
 
         function saveTasks() {
             localStorage.setItem(
@@ -413,32 +408,55 @@
             return div;
         }
 
-        function renderColumn(columnId) {
-            const list = document.getElementById(
-                `${columnId}-list`
-            );
+        function getPriorityValue(priority) {
+            switch (priority) {
+                case "red":
+                    return 4;
 
-            list.innerHTML = "";
+                case "orange":
+                    return 3;
 
-            if (tasks[columnId].length === 0) {
-                list.innerHTML =
-                    '<div class="empty-column">No tasks</div>';
+                case "yellow":
+                    return 2;
+
+                default:
+                    return 1;
+            }
+        }
+
+        function renderBoard() {
+            const columns = {
+                todo: document.getElementById("todo-list"),
+                tofix: document.getElementById("tofix-list"),
+                testing: document.getElementById("testing-list"),
+                completed: document.getElementById("completed-list")
+            };
+
+            Object.values(columns).forEach(column => {
+                column.innerHTML = "";
+            });
+
+            if (tasks.length === 0) {
+                Object.values(columns).forEach(column => {
+                    column.innerHTML =
+                        '<div class="empty-column">No tasks</div>';
+                });
 
                 return;
             }
 
-            tasks[columnId].forEach(task => {
-                list.appendChild(
-                    renderTask(task, columnId)
+            const sortedTasks = [...tasks].sort((a, b) => {
+                return (
+                    getPriorityValue(b.priority) -
+                    getPriorityValue(a.priority)
                 );
             });
-        }
 
-        function renderBoard() {
-            renderColumn("todo");
-            renderColumn("tofix");
-            renderColumn("testing");
-            renderColumn("completed");
+            sortedTasks.forEach(task => {
+                columns[task.column].appendChild(
+                    renderTask(task, task.column)
+                );
+            });
         }
 
         function addTask() {
@@ -457,10 +475,11 @@
                 return;
             }
 
-            tasks[column].push({
+            tasks.push({
                 id: Date.now(),
                 text,
                 priority,
+                column,
                 timestamp: new Date().toLocaleString()
             });
 
@@ -471,27 +490,22 @@
         }
 
         function deleteTask(columnId, taskId) {
-            tasks[columnId] = tasks[columnId].filter(
-                task => task.id !== taskId
-            );
+            tasks = tasks.filter(task => task.id !== taskId);
 
             saveTasks();
             renderBoard();
         }
 
         function moveTask(fromColumn, toColumn, taskId) {
-            const index = tasks[fromColumn].findIndex(
+            const task = tasks.find(
                 task => task.id === taskId
             );
-
-            if (index === -1) {
+        
+            if (!task) {
                 return;
             }
 
-            const task = tasks[fromColumn][index];
-
-            tasks[fromColumn].splice(index, 1);
-            tasks[toColumn].push(task);
+            task.column = toColumn;
 
             saveTasks();
             renderBoard();
